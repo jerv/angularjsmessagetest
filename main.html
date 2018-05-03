@@ -1,0 +1,43 @@
+<h5 class="mt-5">My Messages:</h5>
+<table>
+  <tr>
+    <th>
+      ID:
+    </th>
+    <th>
+      Title:
+    </th>
+    <th>
+      Body:
+    </th>
+    <th>
+      From:
+    </th>
+    <th>
+      To:
+    </th>
+    <th>
+      Date:
+    </th>
+  </tr>
+  <tr ng-repeat="data in messages">
+    <td>
+      {{ data.id }}
+    </td>
+    <td>
+      {{ data.title }}
+    </td>
+    <td>
+      {{ data.body }}
+    </td>
+    <td>
+      {{ data.sender }}
+    </td>
+    <td>
+      {{ data.receiver }}
+    </td>
+    <td>
+      {{ data.sent | date : format : timezone }}
+    </td>
+  </tr>
+</table>

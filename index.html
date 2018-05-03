@@ -1,0 +1,80 @@
+<!doctype html>
+<html ng-app="messageApp">
+  <head>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.9/angular-route.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.5/angular-animate.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+
+    <link rel="icon" type="favicon.png" sizes="32x32">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
+
+    <style type="text/css">
+      html {
+        height: 100%;
+      }
+      body {
+        background: #000;
+        color: #fff;
+        height: 100%;
+        display: block;
+        text-align: center;
+      }
+      .main-div {
+        height: 100%;
+      }
+      .content {
+        width: 100%;
+        max-width: 720px;
+      }
+      table {
+        width: 100%;
+        text-align: center;
+      }
+      th {
+        text-transform: uppercase;
+        color: #333;
+        background-color: #fff;
+      }
+      td, th {
+        padding: 8px 0;
+      }
+      nav {
+        margin: 12px 0 0 0;
+      }
+      nav a {
+        display: inline-block;
+        margin-left: 8px;
+      }
+      nav a:first-of-type {
+        margin-left: 0;
+      }
+      a.active {
+        color: #fff !important;
+        background-color: #007bff !important;
+        border-color: #007bff !important;
+      }
+      a.active:hover {
+        color: #fff;
+        background-color: #0069d9 !important;
+        border-color: #0062cc !important;
+      }
+      a.active:focus {
+        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.5) !important;
+      }
+    </style>
+  </head>
+  <body>
+    <div ng-controller="mainController" class="main-div d-flex justify-content-center align-items-center">
+      <div class="content">
+        <h1>The Message App</h1>
+        <nav>
+          <a href="/#!/" class="btn btn-light" ng-class="{active: location === '/'}">Inbox</a>
+          <a href="/#!/sent" class="btn btn-light" ng-class="{active: location === '/sent'}">Sent</a>
+        </nav>
+        <ng-view></ng-view>
+      </div>
+    </div>
+  </body>
+</html>
