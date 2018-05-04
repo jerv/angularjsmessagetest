@@ -9,8 +9,11 @@ myApp.factory('http', ['$http', function ($http) {
     get: function(url, options) {
       return $http.get(url, options);
     },
-    post: function(url, options) {
-      return $http.post(url, options);
+    delete: function(url, options) {
+      return $http.delete(url, options);
+    },
+    post: function(url, data, options) {
+      return $http.post(url, data, options);
     },
   };
 }]);
@@ -23,13 +26,16 @@ myApp.config(['$routeProvider', function ($routeProvider) {
   */
   $routeProvider
   .when('/', {
-    templateUrl: 'main.html'
+    templateUrl: 'inbox.html'
   })
   .when('/sent', {
     templateUrl: 'sent.html'
   })
+  .when('/login', {
+    templateUrl: 'login.html'
+  })
   .otherwise({
-    redirectTo: '/'
+    redirectTo: '/login'
   });
 
 }]);
@@ -38,10 +44,11 @@ myApp.config(['$routeProvider', function ($routeProvider) {
 // Controllers
 
 myApp.controller('mainController', ['$scope', 'http', '$q', '$location', '$rootScope', function ($scope, http, $q, $location, $rootScope) {
+
   var serverUrl = 'https://iostest.bixly.com/';
-  userName = {
-    username: "test",
-    password: "test123!"
+  $scope.loginCridentials = {
+    username: '',
+    password: ''
   };
 
   $scope.location = $location.path();
@@ -58,7 +65,7 @@ myApp.controller('mainController', ['$scope', 'http', '$q', '$location', '$rootS
 
   // get the inbox
   function getMessages() {
-    getToken(userName).then(function(token){
+    getToken($scope.loginCridentials).then(function(token){
       return http.get(serverUrl + "messages/", {headers: {'Authorization': 'Token ' + token}}).then(function(res) {
         $scope.messages = res.data;
       });
@@ -67,14 +74,45 @@ myApp.controller('mainController', ['$scope', 'http', '$q', '$location', '$rootS
 
   // get sent messages
   function getSentMessages() {
-    getToken(userName).then(function(token){
+    getToken($scope.loginCridentials).then(function(token){
       return http.get(serverUrl + "messages/sent/", {headers: {'Authorization': 'Token ' + token}}).then(function(res) {
         $scope.sentMessages = res.data;
       });
     });
   }
 
-  getMessages();
-  getSentMessages();
+  $scope.messageTitle = "";
+  $scope.messageBody = "";
+  $scope.messageRecipient = "";
+
+  $scope.sendMessage = function() {
+    getToken($scope.loginCridentials).then(function(token){
+      return http.post(serverUrl + "messages/", {
+        'body': $scope.messageBody,
+        'receiver': $scope.messageRecipient,
+        'title': $scope.messageTitle}, {headers: {'Authorization': 'Token ' + token }}).then(function(res) {
+        $scope.success = res.data;
+        $scope.toggleCompose = !$scope.toggleCompose;
+        getMessages();
+      });
+    });
+  }
+
+  $scope.deleteMessage = function(messageNumber) {
+    getToken($scope.loginCridentials).then(function(token){
+      return http.delete(serverUrl + "messages/" + messageNumber + "/", {headers: {'Authorization': 'Token ' + token }}).then(function(res) {
+        $scope.success = res.data;
+        getMessages();
+      });
+    });
+  }
+
+  $scope.changeUser = function() {
+    console.log($scope.currentUser);
+    console.log($scope.currentPassword);
+
+    getMessages();
+    getSentMessages();
+  }
 
 }]);

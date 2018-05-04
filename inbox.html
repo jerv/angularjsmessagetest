@@ -1,5 +1,5 @@
 <div ng-show="messages">
-  <h5 class="mt-5">Sent Messages</h5>
+  <h5 class="mt-5">{{ loginCridentials.username }}'s Messages:</h5>
   <table>
     <tr>
       <th>
@@ -12,13 +12,19 @@
         Body:
       </th>
       <th>
+        From:
+      </th>
+      <th>
         To:
       </th>
       <th>
         Date:
       </th>
+      <th>
+
+      </th>
     </tr>
-    <tr ng-repeat="data in sentMessages | orderBy: '-sent'">
+    <tr ng-repeat="data in messages | orderBy: '-sent'">
       <td>
         {{ data.id }}
       </td>
@@ -29,14 +35,20 @@
         {{ data.body }}
       </td>
       <td>
+        {{ data.sender }}
+      </td>
+      <td>
         {{ data.receiver }}
       </td>
       <td>
         {{ data.sent | date : format : timezone }}
       </td>
+      <td>
+        <button ng-click="deleteMessage(data.id)" class="btn btn-outline-danger"><i class="far fa-trash-alt"></i></button>
+      </td>
     </tr>
   </table>
 </div>
 <p ng-show="!messages" class="mt-5">
-  In order to see your sent messages <a href="/#!/login">login here.</a>
+  In order to see your inbox <a href="/#!/login">login here.</a>
 </p>

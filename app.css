@@ -1,0 +1,109 @@
+html {
+  height: 100%;
+}
+body {
+  background: #000;
+  color: #fff;
+  height: 100%;
+  display: block;
+  text-align: center;
+  position: relative;
+}
+.card {
+  color: #333;
+  text-align: left;
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.main-div {
+  height: 100%;
+}
+.content {
+  width: 100%;
+  max-width: 960px;
+}
+table {
+  width: 100%;
+  text-align: center;
+  box-shadow: 1px 0 rgba(250,250,250,0.1), -1px 0 rgba(250,250,250,0.1), 0 1px rgba(250,250,250,0.1);
+  margin-bottom: 15px;
+}
+table section {
+  max-height: 420px;
+  overflow-y: scroll;
+  display: block;
+}
+table .btn {
+  border-radius: 50%;
+}
+.ng-enter {
+  -webkit-transition: 1s;
+  transition: 1s;
+  opacity: 0;
+}
+.ng-enter-active {
+  opacity: 1;
+}
+tr:nth-of-type(even) {
+  background-color:rgba(250,250,250,0.1);
+}
+th {
+  text-transform: uppercase;
+  color: #333;
+  background-color: #fff;
+}
+td, th {
+  padding: 8px 0;
+}
+nav {
+  margin: 12px 0 0 0;
+}
+nav a {
+  display: inline-block;
+  margin-left: 8px;
+}
+nav a:first-of-type {
+  margin-left: 0;
+}
+a.active {
+  color: #fff !important;
+  background-color: #007bff !important;
+  border-color: #007bff !important;
+}
+a.active:hover {
+  color: #fff;
+  background-color: #0069d9 !important;
+  border-color: #0062cc !important;
+}
+a.active:focus {
+  box-shadow: 0 0 0 0.2rem rgba(0,123,255,.5) !important;
+}
+.animate.ng-enter {
+    transition: 0.25s cubic-bezier(0.5, 0.1, 0.25, 1) all;
+}
+.animate.ng-enter, .animate.ng-leave.ng-leave-active {
+    opacity: 0;
+    display: block;
+}
+.animate.ng-leave, .animate.ng-enter.ng-enter-active {
+    opacity: 1;
+    display: block;
+}
+.send-button {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  border-radius: 50%;
+  padding: 0;
+  line-height: 60px;
+  width: 60px;
+}
+form button, form a {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+}
+form button svg, form a svg {
+  margin-right: 7px;
+}

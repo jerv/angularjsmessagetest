@@ -10,70 +10,60 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css">
 
-    <style type="text/css">
-      html {
-        height: 100%;
-      }
-      body {
-        background: #000;
-        color: #fff;
-        height: 100%;
-        display: block;
-        text-align: center;
-      }
-      .main-div {
-        height: 100%;
-      }
-      .content {
-        width: 100%;
-        max-width: 720px;
-      }
-      table {
-        width: 100%;
-        text-align: center;
-      }
-      th {
-        text-transform: uppercase;
-        color: #333;
-        background-color: #fff;
-      }
-      td, th {
-        padding: 8px 0;
-      }
-      nav {
-        margin: 12px 0 0 0;
-      }
-      nav a {
-        display: inline-block;
-        margin-left: 8px;
-      }
-      nav a:first-of-type {
-        margin-left: 0;
-      }
-      a.active {
-        color: #fff !important;
-        background-color: #007bff !important;
-        border-color: #007bff !important;
-      }
-      a.active:hover {
-        color: #fff;
-        background-color: #0069d9 !important;
-        border-color: #0062cc !important;
-      }
-      a.active:focus {
-        box-shadow: 0 0 0 0.2rem rgba(0,123,255,.5) !important;
-      }
-    </style>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.11/js/all.js" integrity="sha384-ImVoB8Er8knetgQakxuBS4G3RSkyD8IZVVQCAnmRJrDwqJFYUE4YOv+DbIofcO9C" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="app.css" />
   </head>
   <body>
-    <div ng-controller="mainController" class="main-div d-flex justify-content-center align-items-center">
+    <div ng-controller="mainController" class="main-div d-flex justify-content-center">
       <div class="content">
-        <h1>The Message App</h1>
+        <img src="favicon.png" class="mt-5 mb-2">
+        <h2 class="mb-4">The Message App</h2>
+        <p ng-show="{{ loginCridentials }}">
+          Current User Is : {{ loginCridentials.username }}
+        </p>
         <nav>
-          <a href="/#!/" class="btn btn-light" ng-class="{active: location === '/'}">Inbox</a>
-          <a href="/#!/sent" class="btn btn-light" ng-class="{active: location === '/sent'}">Sent</a>
+          <a href="/#!/login" class="btn btn-light" ng-class="{active: location === '/login'}"><i class="fas fa-users"></i> User Select</a>
+          <a ng-show="messages" href="/#!/" class="btn btn-light" ng-class="{active: location === '/'}"><i class="fas fa-inbox"></i> Inbox</a>
+          <a ng-show="messages" href="/#!/sent" class="btn btn-light" ng-class="{active: location === '/sent'}"><i class="fas fa-share-square"></i> Sent</a>
         </nav>
-        <ng-view></ng-view>
+
+        <div ng-show="messages">
+          <a ng-click="toggleCompose = !toggleCompose" href="javascript:void(0);" class="btn btn-success btn-lg send-button"><i class="fas fa-envelope"></i> </a>
+          <div ng-show="toggleCompose">
+            <h5 class="mt-5">Send A Message:</h5>
+            <div class="card">
+              <div class="card-body">
+                <form>
+                  <div class="form-group">
+                    <label for="receiver">Recipient:</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">@</span>
+                      </div>
+                      <input ng-model="messageRecipient" type="text" class="form-control" name="receiver" placeholder="Username" />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="title">Subject:</label>
+                    <input ng-model="messageTitle" type="text" class="form-control" name="title" placeholder="Message subject" />
+                  </div>
+                  <div class="form-group">
+                    <label for="body">Message:</label>
+                    <textarea ng-model="messageBody" name="body" class="form-control" placeholder="Write message text here"></textarea>
+                  </div>
+                  <div class="form-group">
+                    <button ng-click="sendMessage()" class="btn btn-success"><i class="fas fa-envelope"></i> Send Message</button>
+                  </div>
+                  <p>
+                    {{ success.data | uppercase }}
+                  </p>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ng-view class="animate"></ng-view>
       </div>
     </div>
   </body>
