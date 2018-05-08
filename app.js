@@ -56,7 +56,7 @@ myApp.controller('mainController', ['$scope', 'http', '$q', '$location', '$rootS
       $scope.location = $location.path();
   });
 
-  // Get the token.
+  // Get the auth token.
   function getToken(loginInfo) {
     return http.post(serverUrl + "api-token-auth/", loginInfo).then(function(res) {
       return res.data.token;
@@ -81,10 +81,12 @@ myApp.controller('mainController', ['$scope', 'http', '$q', '$location', '$rootS
     });
   }
 
+  // create message variables for inputs to bind to
   $scope.messageTitle = "";
   $scope.messageBody = "";
   $scope.messageRecipient = "";
 
+  // for sending messages
   $scope.sendMessage = function() {
     getToken($scope.loginCridentials).then(function(token){
       return http.post(serverUrl + "messages/", {
@@ -98,6 +100,7 @@ myApp.controller('mainController', ['$scope', 'http', '$q', '$location', '$rootS
     });
   }
 
+  // for deleting messages
   $scope.deleteMessage = function(messageNumber) {
     getToken($scope.loginCridentials).then(function(token){
       return http.delete(serverUrl + "messages/" + messageNumber + "/", {headers: {'Authorization': 'Token ' + token }}).then(function(res) {
@@ -107,10 +110,8 @@ myApp.controller('mainController', ['$scope', 'http', '$q', '$location', '$rootS
     });
   }
 
+  // reload stuff on user change
   $scope.changeUser = function() {
-    console.log($scope.currentUser);
-    console.log($scope.currentPassword);
-
     getMessages();
     getSentMessages();
   }
